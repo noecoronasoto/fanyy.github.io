@@ -1,0 +1,341 @@
+body {
+    background-color: #f0f2f5;
+}
+
+.story-card {
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+}
+
+.story-card img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    display: block;
+}
+
+.card-img-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%);
+    border-radius: 15px;
+}
+
+.story-text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilos para el Modal */
+.modal-content-custom {
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: none;
+    height: 90vh; /* Altura del modal */
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    padding: 1rem 1rem 0 1rem;
+    z-index: 10;
+}
+
+.modal-body {
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    align-items: center; /* Centra el contenido del body verticalmente */
+    justify-content: center; /* Centra el contenido del body horizontalmente */
+    padding: 0; /* Aseguramos que no haya padding extra que interfiera */
+    overflow: hidden; /* Importante para que el carrusel dentro no sobresalga */
+}
+
+/* Estilos para el contenido del carrusel */
+.carousel {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.carousel-inner {
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-item {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.carousel-item:not(.active) {
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.carousel-item.active {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+
+.carousel-content {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* **CAMBIO CLAVE: Mantener 'center' para que el texto esté centrado por defecto en el primer slide** */
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Este estilo se aplica solo a los slides que NO son el primero (es decir, los de canciones) */
+.carousel-item:not(:first-child) .carousel-content {
+    justify-content: space-around; /* **NUEVO: Distribuye la song-card y el texto** */
+}
+
+
+.modal-title-custom {
+    font-size: 3.5rem;
+    font-weight: normal;
+    color: #333;
+    line-height: 1.2;
+    padding: 0 1rem;
+    text-align: center;
+    margin-bottom: 20px;
+    max-width: 90%;
+    flex-shrink: 0;
+}
+
+.carousel-image-size {
+    max-width: 80%;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* --- ESTILOS PARA LOS NUEVOS ELEMENTOS DE PENSAMIENTOS CON CANCIÓN --- */
+.song-card {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    max-width: 600px;
+    width: 90%;
+    margin-bottom: 20px; /* Espacio entre la tarjeta y el texto del pensamiento */
+    flex-shrink: 0;
+    min-height: 160px;
+    /* Eliminar el margin-top negativo aquí */
+    margin-top: 0; /* Asegurarse de que no haya un margen negativo aquí */
+}
+
+.song-cover {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.song-info {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.song-info h4 {
+    margin-bottom: 5px;
+    color: #333;
+    font-size: 1.6rem;
+}
+
+.song-info p {
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.play-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0;
+}
+
+.play-button:hover {
+    background-color: #218838;
+}
+
+.play-button i.bi-play-fill,
+.play-button i.bi-pause-fill {
+    font-size: inherit;
+}
+
+
+.thought-text {
+    font-size: 1.8rem;
+    color: #555;
+    line-height: 1.5;
+    max-width: 80%;
+    margin-bottom: 0;
+    /* QUITAMOS flex-grow: 1 para que space-around funcione mejor en el padre */
+    flex-grow: 0; /* **NUEVO: El texto ya no intenta "crecer" para rellenar espacio** */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* --- FIN DE ESTILOS PARA LOS NUEVOS ELEMENTOS --- */
+
+
+/* Flechas del Carrusel (Bootstrap Icons) */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 10%;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    z-index: 11;
+    color: #6c757d;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-image: none;
+    font-size: 3rem;
+    color: currentColor;
+}
+
+.carousel-control-prev-icon::before {
+    content: "\F284"; /* bi-chevron-left */
+    font-family: "bootstrap-icons" !important;
+}
+
+.carousel-control-next-icon::before {
+    content: "\F285"; /* bi-chevron-right */
+    font-family: "bootstrap-icons" !important;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 992px) {
+    .story-text { font-size: 2rem; }
+    .story-card img { height: 400px; }
+    .modal-dialog { max-width: 90vw; }
+    .modal-content-custom { height: 85vh; }
+    .modal-title-custom { font-size: 2.8rem; }
+    .carousel-image-size { max-width: 90%; max-height: 75vh; }
+    .carousel-control-prev-icon, .carousel-control-next-icon { font-size: 2.5rem; }
+    .song-card { flex-direction: column; text-align: center; margin-top: 0; }
+    .song-info { text-align: center; }
+    .thought-text { font-size: 1.5rem; flex-grow: 0; }
+}
+
+@media (max-width: 768px) {
+    .story-text { font-size: 1.8rem; }
+    .story-card img { height: 350px; }
+    .modal-dialog { margin: 0.5rem; max-width: none; width: auto; }
+    .modal-content-custom { height: 80vh; max-height: calc(100vh - 1rem); }
+    .modal-title-custom { font-size: 2rem; padding: 0 1rem; }
+    .carousel-image-size { max-width: 95%; max-height: 70vh; }
+    .carousel-control-prev, .carousel-control-next { width: 8%; }
+    .carousel-control-prev-icon, .carousel-control-next-icon { font-size: 2rem; }
+    .carousel-content { padding: 1rem; }
+    .song-card { width: 95%; margin-top: 0; }
+    .thought-text { font-size: 1.2rem; flex-grow: 0; }
+    .song-cover { width: 100px; height: 100px; }
+    .play-button { width: 50px; height: 50px; font-size: 1.8rem; }
+}
+
+@media (max-width: 576px) {
+    .story-text { font-size: 1.6rem; }
+    .story-card img { height: 300px; }
+    .modal-content-custom { height: 75vh; }
+    .modal-title-custom { font-size: 1.6rem; }
+    .carousel-image-size { max-height: 65vh; }
+    .carousel-control-prev-icon, .carousel-control-next-icon { font-size: 1.8rem; }
+    .song-cover { width: 80px; height: 80px; }
+    .play-button { width: 40px; height: 40px; font-size: 1.5rem; }
+    .song-info h4 { font-size: 1.2rem; }
+    .song-info p { font-size: 0.9rem; }
+    .thought-text { font-size: 1rem; flex-grow: 0; }
+    .song-card { margin-top: 0; }
+}
+/* ... tus estilos existentes ... */
+
+.modal-title-custom {
+    font-size: 3.5rem; /* Ajusta el tamaño de la fuente para el texto */
+    font-weight: normal;
+    color: #333;
+    line-height: 1.2;
+    padding: 0 1rem;
+    text-align: center;
+    margin-bottom: 20px;
+    max-width: 90%;
+    flex-shrink: 0;
+}
+
+.carousel-image-size {
+    max-width: 80%; /* Ajusta el ancho máximo de la imagen */
+    max-height: 75vh; /* Ajusta la altura máxima de la imagen en relación con la ventana */
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ... el resto de tus estilos ... */
+/* ... tus estilos existentes ... */
+
+/* Clase para texto de párrafos en el carrusel con texto del modal */
+.carousel-text-content {
+    font-size: 1.5rem; /* Ajusta este valor. Prueba con 1.5rem o incluso 1.3rem si es necesario */
+    color: #333;
+    line-height: 1.5;
+    padding: 0 2rem;
+    text-align: center;
+    max-width: 80%; /* Esto limita el ancho del texto, lo cual ayuda */
+}
+
+/* Y si tienes la media query para dispositivos móviles, también ajusta esta parte */
+@media (max-width: 768px) {
+    /* ... otros estilos responsivos ... */
+
+    .carousel-text-content {
+        font-size: 1.1rem; /* Ajusta este valor para móviles, puede ser 1.1rem o 1rem */
+    }
+}
+
+/* ... el resto de tus estilos ... */
